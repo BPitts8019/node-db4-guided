@@ -20,7 +20,9 @@ exports.up = async function (knex) {
       table.string("name").notNullable();
       table.integer("species_id")
          .notNullable()
-         .references("id").inTable(SPECIES);
+         .references("id").inTable(SPECIES)
+         .onDelete("CASCADE")
+         .onUpdate("CASCADE");
    });
 
    await knex.schema.createTable(ZOOS_ANIMALS, (table) => {
@@ -29,10 +31,14 @@ exports.up = async function (knex) {
 
       table.integer(ZOOS_ID)
          .notNullable()
-         .references("id").inTable(ZOOS);
+         .references("id").inTable(ZOOS)
+         .onDelete("CASCADE")
+         .onUpdate("CASCADE");
       table.integer(ANIMALS_ID)
          .notNullable()
-         .references("id").inTable(ANIMALS);
+         .references("id").inTable(ANIMALS)
+         .onDelete("CASCADE")
+         .onUpdate("CASCADE");
       table.date("from");
       table.date("to");
       table.primary([ZOOS_ID, ANIMALS_ID])
